@@ -4,7 +4,7 @@
   "name": "tutero-accounts",
   "title": "Tutero Accounts",
   "description": "Convenience commands for creating and logging into Tutero accounts.",
-  "icon": "tutero-icon.svg",
+  "icon": "tutero-icon.png",
   "author": "zachariah-abraham",
   "categories": [
     "Developer Tools"
@@ -19,45 +19,45 @@
     },
     {
       "name": "tutero-accounts-log-in-as-teacher",
-      "title": "Tutero Accounts - Log In As Teacher",
+      "title": "Tutero Accounts - Log in as Teacher",
       "description": "Autofills the Tutero Log In Popup as a Teacher",
       "mode": "no-view",
-      "icon": "tutero-icon.svg"
+      "icon": "tutero-icon.png"
     },
     {
       "name": "tutero-accounts-sign-up-as-teacher",
-      "title": "Tutero Accounts - Sign Up As Teacher",
+      "title": "Tutero Accounts - Sign up as Teacher",
       "description": "Autofills the Tutero Sign Up Popup as a Teacher",
       "mode": "no-view",
-      "icon": "tutero-icon.svg"
+      "icon": "tutero-icon.png"
     },
     {
       "name": "tutero-accounts-sign-up-as-student",
-      "title": "Tutero Accounts - Sign Up As Student",
+      "title": "Tutero Accounts - Sign up as Student",
       "description": "Autofills the Tutero Sign Up Popup as a Student",
       "mode": "no-view",
-      "icon": "tutero-icon.svg"
+      "icon": "tutero-icon.png"
     },
     {
       "name": "tutero-accounts-log-in-as-student",
-      "title": "Tutero Accounts - Log In As Student",
+      "title": "Tutero Accounts - Log in as Student",
       "description": "Autofills the Tutero Log In Popup as a Student",
       "mode": "no-view",
-      "icon": "tutero-icon.svg"
+      "icon": "tutero-icon.png"
     },
     {
       "name": "tutero-accounts-get-last-used-email-as-teacher",
-      "title": "Tutero Accounts - Get Last Used Email As Teacher",
+      "title": "Tutero Accounts - Get Last Used Email as Teacher",
       "description": "Copies the last signed up teacher email to your clipboard",
       "mode": "no-view",
-      "icon": "tutero-icon.svg"
+      "icon": "tutero-icon.png"
     },
     {
       "name": "tutero-accounts-get-last-used-email-as-student",
-      "title": "Tutero Accounts - Get Last Used Email As Student",
+      "title": "Tutero Accounts - Get Last Used Email as Student",
       "description": "Copies the last signed up student email to your clipboard",
       "mode": "no-view",
-      "icon": "tutero-icon.svg"
+      "icon": "tutero-icon.png"
     }
   ],
   "dependencies": {
