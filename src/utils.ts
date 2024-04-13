@@ -26,7 +26,7 @@ export interface Shortcut {
 export const copyLastSignedUpEmail = async (userType: UserType) => {
   const name = await LocalStorage.getItem<string>(nameLocalStorageKey());
   if (!name) {
-    await showToast(Toast.Style.Failure, "Couldn't find a name");
+    await showToast(Toast.Style.Failure, "Use 'Manage' first to set your name");
     return;
   }
   const lastEmail = await LocalStorage.getItem<string>(lastSignedUpEmailStorageKey(name, userType));
@@ -44,7 +44,7 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType) =>
   // get name
   const name = await LocalStorage.getItem<string>(nameLocalStorageKey());
   if (!name) {
-    await showToast(Toast.Style.Failure, "Run the Tutero Accounts command first to set your name");
+    await showToast(Toast.Style.Failure, "Use 'Manage' first to set your name");
     return;
   }
 
