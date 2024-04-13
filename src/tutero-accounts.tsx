@@ -37,11 +37,11 @@ export default function Command() {
           }
         />
         <List.Item
-          title="Get last used email"
+          title="Get Last Used Email"
           actions={
             <ActionPanel>
-              <Action title="Get last used email as Teacher" onAction={() => copyLastSignedUpEmail(UserType.Teacher)} />
-              <Action title="Get last used email as Student" onAction={() => copyLastSignedUpEmail(UserType.Student)} />
+              <Action title="Get Last Used Email as Teacher" onAction={() => copyLastSignedUpEmail(UserType.Teacher)} />
+              <Action title="Get Last Used Email as Student" onAction={() => copyLastSignedUpEmail(UserType.Student)} />
             </ActionPanel>
           }
         />
@@ -54,8 +54,7 @@ export function TuteroAccounts() {
   
   useEffect(() => {
     LocalStorage.allItems<[string, StoredValue]>().then((items) => {
-        let storedItems = Object.entries(items);
-        setStoredItems(storedItems);
+        setStoredItems(Object.entries(items));
     });
   }, []);
 
