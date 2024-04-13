@@ -1,35 +1,86 @@
-import { Action, ActionPanel, Form, Icon, LocalStorage, showToast, Toast } from "@raycast/api";
+import { Action, ActionPanel, Form, Icon, List, LocalStorage, showToast, Toast } from "@raycast/api";
 import { useEffect, useState } from "react";
-import { nameLocalStorageKey } from "./utils";
+import { autofillPopup, copyLastSignedUpEmail, nameLocalStorageKey, PopupType, UserType } from "./utils";
 
 type StoredValue = string | number | boolean;
 export default function Command() {
-  const [loadingStoredItems, setLoadingStoredItems] = useState(true);
-  const [storedItems, setStoredItems] = useState([] as [string, StoredValue][]);
+  return (
+    <List>
+        <List.Item
+          title="Manage"
+          actions={
+            <ActionPanel>
+              <Action.Push
+                icon={Icon.Pencil}
+                title="Manage Preferences"
+                target={<TuteroAccounts/>}
+              />
+            </ActionPanel>
+          }
+        />
+        <List.Item 
+          title="Sign up"
+          actions={
+            <ActionPanel>
+              <Action title="Sign up as Teacher" onAction={() => autofillPopup(PopupType.SignUp, UserType.Teacher)} />
+              <Action title="Sign up as Student" onAction={() => autofillPopup(PopupType.SignUp, UserType.Student)} />
+            </ActionPanel>
+          }
+        />
+        <List.Item 
+          title="Log in"
+          actions={
+            <ActionPanel>
+              <Action title="Log in as Teacher" onAction={() => autofillPopup(PopupType.LogIn, UserType.Teacher)} />
+              <Action title="Log in as Student" onAction={() => autofillPopup(PopupType.LogIn, UserType.Student)} />
+            </ActionPanel>
+          }
+        />
+        <List.Item
+          title="Get last used email"
+          actions={
+            <ActionPanel>
+              <Action title="Get last used email as Teacher" onAction={() => copyLastSignedUpEmail(UserType.Teacher)} />
+              <Action title="Get last used email as Student" onAction={() => copyLastSignedUpEmail(UserType.Student)} />
+            </ActionPanel>
+          }
+        />
+    </List>
+  );
+}
 
+export function TuteroAccounts() {
+  const [storedItems, setStoredItems] = useState([] as [string, StoredValue][]);
+  
   useEffect(() => {
     LocalStorage.allItems<[string, StoredValue]>().then((items) => {
-      setLoadingStoredItems(false);
-      setStoredItems(Object.entries(items));
+        let storedItems = Object.entries(items);
+        setStoredItems(storedItems);
     });
   }, []);
 
   return (
-    <Form
-      isLoading={loadingStoredItems}
-      actions={
-        <ActionPanel>
-          <SavePreferencesAction />
-          <ClearPreferencesAction />
-        </ActionPanel>
-      }
-    >
-      <Form.TextArea id="name" title="Name" placeholder="Name to use at the start of your accounts, e.g. zac" />
-      <Form.Description
-        title="Preferences"
-        text={`This is a list of all stored preferences.\n\nUse ⌘ + k to open the action menu to clear all values.\n${storedItems.map((item) => item[0] + ": " + item[1]).join("\n")}`}
-      />
-    </Form>
+    <>  
+      <Form
+        actions={
+          <ActionPanel>
+            <SavePreferencesAction />
+            <ClearPreferencesAction />
+          </ActionPanel>
+        }
+        >
+        <Form.Description
+          title="Name"
+          text={`This is the name used at the start of your accounts. Use ⌘ + ⏎ to save the name. Hit Esc to leave the name unchanged.`}
+          />
+        <Form.TextArea id="name" title="Value" placeholder="e.g. zac" />
+        <Form.Separator />
+        <Form.Description
+          title="Preferences"
+          text={`This is a list of all stored preferences.\n\nUse ⌘ + k to open the action menu to clear all values.\n${storedItems.map((item) => item[0] + ": " + item[1]).join("\n")}`}  
+        />
+      </Form>
+    </>
   );
 }
 

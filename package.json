@@ -16,48 +16,6 @@
       "title": "Tutero Accounts",
       "description": "Manage the Tutero Accounts extension",
       "mode": "view"
-    },
-    {
-      "name": "tutero-accounts-log-in-as-teacher",
-      "title": "Tutero Accounts - Log in as Teacher",
-      "description": "Autofills the Tutero Log In Popup as a Teacher",
-      "mode": "no-view",
-      "icon": "tutero-icon.png"
-    },
-    {
-      "name": "tutero-accounts-sign-up-as-teacher",
-      "title": "Tutero Accounts - Sign up as Teacher",
-      "description": "Autofills the Tutero Sign Up Popup as a Teacher",
-      "mode": "no-view",
-      "icon": "tutero-icon.png"
-    },
-    {
-      "name": "tutero-accounts-sign-up-as-student",
-      "title": "Tutero Accounts - Sign up as Student",
-      "description": "Autofills the Tutero Sign Up Popup as a Student",
-      "mode": "no-view",
-      "icon": "tutero-icon.png"
-    },
-    {
-      "name": "tutero-accounts-log-in-as-student",
-      "title": "Tutero Accounts - Log in as Student",
-      "description": "Autofills the Tutero Log In Popup as a Student",
-      "mode": "no-view",
-      "icon": "tutero-icon.png"
-    },
-    {
-      "name": "tutero-accounts-get-last-used-email-as-teacher",
-      "title": "Tutero Accounts - Get Last Used Email as Teacher",
-      "description": "Copies the last signed up teacher email to your clipboard",
-      "mode": "no-view",
-      "icon": "tutero-icon.png"
-    },
-    {
-      "name": "tutero-accounts-get-last-used-email-as-student",
-      "title": "Tutero Accounts - Get Last Used Email as Student",
-      "description": "Copies the last signed up student email to your clipboard",
-      "mode": "no-view",
-      "icon": "tutero-icon.png"
     }
   ],
   "dependencies": {
