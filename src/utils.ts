@@ -90,8 +90,7 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType, em
     const accountEmail =
       name.toLowerCase() + userType + accountNumber + "." + month + day + "." + year + "@yopmail.com";
 
-    const accountsString = await LocalStorage.getItem<string>(accountsStorageKey(userType));
-    let accounts = accountsString ? accountsString.split(",") : [];
+    let accounts = await getAllAccounts(userType);
     await Clipboard.paste(accountName);
     await runShortcutSequence(tabSequence);
     await Clipboard.paste(accountEmail);
@@ -127,7 +126,7 @@ export async function getAllAccounts(userType: UserType): Promise<string[]> {
 }
 
 async function getLastSignedUpEmail(userType: UserType) {
-  return (await getAllAccounts(userType))[0];
+  return (await getAllAccounts(userType)).slice(-1).pop();
 }
 
 function titleCaseWord(word: string) {
