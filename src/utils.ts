@@ -29,7 +29,7 @@ export const copyLastSignedUpEmail = async (userType: UserType) => {
     await showToast(Toast.Style.Failure, "Use 'Manage' first to set your name");
     return;
   }
-  const lastEmail = await LocalStorage.getItem<string>(lastSignedUpEmailStorageKey(name, userType));
+  const lastEmail = await getLastSignedUpEmail(userType);
   if (!lastEmail) {
     await showToast(Toast.Style.Failure, "Couldn't find any signed up email for " + name + " " + userType);
     return;
@@ -37,7 +37,8 @@ export const copyLastSignedUpEmail = async (userType: UserType) => {
   await Clipboard.copy(lastEmail);
   await showToast(Toast.Style.Success, "Copied " + lastEmail + " to clipboard");
 };
-export const autofillPopup = async (popupType: PopupType, userType: UserType) => {
+
+export const autofillPopup = async (popupType: PopupType, userType: UserType, email: string | undefined) => {
   const tabSequence = "ASCII character 9";
   const enterSequence = "ASCII character 13";
 
@@ -50,7 +51,7 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType) =>
 
   if (popupType === PopupType.LogIn) {
     // login flow
-    const lastEmail = await LocalStorage.getItem<string>(lastSignedUpEmailStorageKey(name, userType));
+    const lastEmail = email ?? (await getLastSignedUpEmail(userType));
     if (!lastEmail) {
       await showToast(Toast.Style.Failure, "Couldn't find any signed up email for " + name + " " + userType);
       return;
@@ -66,6 +67,7 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType) =>
     const today = new Date();
     const month = today.toLocaleDateString("en-US", { month: "short" }).toLowerCase();
     const day = today.getDate();
+    const year = today.getFullYear();
     const storeDate = month + day;
 
     // if this is the first time we're storing, or last stored date is not today, reset the account number
@@ -84,9 +86,11 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType) =>
 
     const password = "123123";
     const accountName =
-      titleCaseWord(name) + titleCaseWord(userType) + accountNumber + " " + titleCaseWord(month) + day;
-    const accountEmail = name.toLowerCase() + userType + accountNumber + "." + month + day + "@yopmail.com";
+      titleCaseWord(name) + titleCaseWord(userType) + accountNumber + " " + titleCaseWord(month) + day + "." + year;
+    const accountEmail =
+      name.toLowerCase() + userType + accountNumber + "." + month + day + "." + year + "@yopmail.com";
 
+    let accounts = await getAllAccounts(userType);
     await Clipboard.paste(accountName);
     await runShortcutSequence(tabSequence);
     await Clipboard.paste(accountEmail);
@@ -95,7 +99,7 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType) =>
     await runShortcutSequence(tabSequence);
     await Clipboard.paste(password);
     await runShortcutSequence(enterSequence);
-    await LocalStorage.setItem(lastSignedUpEmailStorageKey(name, userType), accountEmail);
+    await LocalStorage.setItem(accountsStorageKey(userType), [...accounts, accountEmail].join(","));
   }
   await showToast(Toast.Style.Success, "It's called ZacMagic™! :D");
 };
@@ -112,8 +116,17 @@ export function dateLocalStorageKey() {
   return `date`;
 }
 
-export function lastSignedUpEmailStorageKey(name: string, userType: UserType) {
-  return `${name}-${userType}-last-signed-up-email`;
+export function accountsStorageKey(userType: UserType) {
+  return `${userType}-accounts`;
+}
+
+export async function getAllAccounts(userType: UserType): Promise<string[]> {
+  const accountsString = await LocalStorage.getItem<string>(accountsStorageKey(userType));
+  return accountsString ? accountsString.split(",") : [];
+}
+
+async function getLastSignedUpEmail(userType: UserType) {
+  return (await getAllAccounts(userType)).slice(-1).pop();
 }
 
 function titleCaseWord(word: string) {
