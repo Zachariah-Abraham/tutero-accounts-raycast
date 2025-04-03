@@ -90,7 +90,7 @@ export const autofillPopup = async (popupType: PopupType, userType: UserType, em
     const accountEmail =
       name.toLowerCase() + userType + accountNumber + "." + month + day + "." + year + "@yopmail.com";
 
-    let accounts = await getAllAccounts(userType);
+    const accounts = await getAllAccounts(userType);
     await Clipboard.paste(accountName);
     await runShortcutSequence(tabSequence);
     await Clipboard.paste(accountEmail);
